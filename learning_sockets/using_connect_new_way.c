@@ -1,7 +1,8 @@
 /*
  * This is the new way to use connect() introduced for IPv6. This is the easier 
  * method. 
- * Note: The old method can be used for both IPv4 & IPv6.
+ * NOTE: The old method can be used for both IPv4 & IPv6.
+ * NOTE2 : Sample Code, will not compile
  */
 
 #include <stdio.h>
@@ -39,9 +40,9 @@ int main(int argc, char * argv[])
 		exit(1);
 	}
 
-	/*
-	 * Do some operations here
-	 */
+
+	--- Do some operations here ---
+
 
 	freeaddrinfo(servinfo);
 

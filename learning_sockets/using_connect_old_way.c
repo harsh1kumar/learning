@@ -1,6 +1,7 @@
 /*
  * This is the old way of doing things which was used for IPv4. 
  * But, this can also be used for IPv6
+ * NOTE : Sample Code, will not compile
  */
 
 #include <stdio.h>
@@ -27,9 +28,7 @@ int main(int argc, char * argv[])
 
 	connect(servfd, (struct sockaddr *)&servinfo, sizeof servinfo);
 
-	/*
-	 * Do some operations here
-	 */
+	--- Do some operations here ---
 
 	return 0;
 }
