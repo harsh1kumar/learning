@@ -1,0 +1,25 @@
+*) git status
+*) git add [file or directory]
+	Add new file to staging area
+	Add modified file to staging area
+*) git diff
+*) git diff [file]
+*) git commit -v
+	Will commit the changes
+	Editor will open up where commit message has to be written
+	-v shows the diff of the change
+*) git log
+	See the log of all the commits
+*) git branch
+	List all the branches
+	Current branch is denoted with an asterisk
+	Default branch = master
+*) git remote
+	Lists all the remotes
+	Default remote = origin
+*) git push [remote] [branch]
+	Pushes the changes in a branch to remote
+	$ git push origin master
+*) git help [help-topic]
+*) git reset HEAD [file]
+	Unstages the file
