@@ -12,10 +12,60 @@
 #define LISTENING_PORT ("4000")
 #define LISTENING_QUEUE 1
 
+void serve_actual_work(int clientfd);
+void serve_incoming(int servfd);
+
+void serve_actual_work(int clientfd)
+{
+	char * send_buff = NULL;
+	unsigned int st_len, buff_len;
+
+	printf("Incoming connection accepted. Ready to send data...\n\n");
+	do {
+		printf("Enter > ");
+		
+		if ((st_len = getline(&send_buff, &buff_len, stdin)) == -1) {
+			perror("getline");
+			exit(1);
+		}
+
+		/* The string sent is NULL terminated, so no need to 
+		 * add null in the client buffer */
+		if (send(clientfd, send_buff, st_len+1, 0) == -1)
+			perror("send");
+
+	} while (strcmp(send_buff, "q\n")); /* Entering string "q\n" will exit*/
+	free(send_buff);
+
+	return;
+}
+
+void serve_incoming(int servfd)
+{
+	int clientfd;
+	struct sockaddr_storage clientinfo;
+	socklen_t cinfo_len = sizeof clientinfo;
+
+	printf("Waiting for connections...\n\n");
+	clientfd = accept(servfd, (struct sockaddr *)&clientinfo, &cinfo_len);
+	if (clientfd == -1) {
+		perror("accept");
+		close(servfd);
+		exit(1);
+	}
+
+	serve_actual_work(clientfd);
+
+	close(clientfd);
+	printf("Connection closed\n\n");
+
+	return;
+}
+
 int main(int argc, char * argv[])
 {
 	int retval;	
-	int servfd, clientfd;
+	int servfd;
 	int yes = 1;
 	struct addrinfo hints, * servinfo, *p;
 
@@ -51,60 +101,24 @@ int main(int argc, char * argv[])
 		break;
 	}
 
+	freeaddrinfo(servinfo); /* No longer needed */
+
 	if (p == NULL) {
 		fprintf(stderr, "Failed to bind\n");
-		freeaddrinfo(servinfo);
+		close(servfd);
 		exit(1);
 	}
-
 	
 	if ((listen(servfd, LISTENING_QUEUE)) == -1 ) {
 		perror("listen");
 		close(servfd);
-		freeaddrinfo(servinfo);
 		exit(1);
 	}
 
-	while(1) {
-		struct sockaddr_storage clientinfo;
-		socklen_t cinfo_len = sizeof clientinfo;
-		char * send_buff = NULL;
-		unsigned int st_len, buff_len;
-
-		printf("Listening for connections...\n\n");
-
-		clientfd = accept(servfd, (struct sockaddr *)&clientinfo, &cinfo_len);
-		if (clientfd == -1) {
-			perror("accept");
-			close(servfd);
-			freeaddrinfo(servinfo);
-			exit(1);
-		}
-
-		printf("Incoming connection accepted. Ready to send data...\n\n");
-		while (1) {
-			printf("Enter > ");
-			
-			if ((st_len = getline(&send_buff, &buff_len, stdin)) == -1) {
-				perror("getline");
-				exit(1);
-			}
-
-			/* The string sent is NULL terminated, so no need to 
-			 * add null in the client buffer */
-			if (send(clientfd, send_buff, st_len+1, 0) == -1)
-				perror("send");
-			if (!strcmp(send_buff, "q\n"))
-				break;
-		}
-		printf("Connection closed\n\n");
-		free(send_buff);
-		close(clientfd);
-	}
+	while(1)
+		serve_incoming(servfd);
 
 	close(servfd);
-	freeaddrinfo(servinfo);
-
 	return 0;
 }
 

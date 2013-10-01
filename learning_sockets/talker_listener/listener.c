@@ -12,12 +12,36 @@
 #define REQ_ARGC 3
 #define RECV_BUFF_LEN 100
 
+void client_work(int servfd);
+
+void client_work(int servfd)
+{
+	int recv_len;
+	char recv_buff[RECV_BUFF_LEN];
+
+	do {
+		recv_len = recv(servfd, recv_buff, RECV_BUFF_LEN, 0);
+		if (recv_len == -1) {
+			perror("recv");
+			close(servfd);
+			exit(1);
+		}
+		else if(recv_len == 0) {
+			fprintf(stderr, "recv: Remote server closed the connection\n");
+			close(servfd);
+			exit(1);
+		}
+		else
+			printf("%s", recv_buff);
+	} while (strcmp(recv_buff,"q\n"));
+
+	return;
+}
+
 int main(int argc, char * argv[])
 {
 	int servfd;
 	int retval;
-	int recv_len;
-	char recv_buff[RECV_BUFF_LEN];
 	struct addrinfo hints, * servinfo, * p;
 
 	if (argc != REQ_ARGC) {
@@ -49,30 +73,17 @@ int main(int argc, char * argv[])
 		break;
 	}
 
+	freeaddrinfo(servinfo); /* No longer needed */
+
 	if (p == NULL) {
 		fprintf(stderr,"Failed to connect\n");
 		close(servfd);
-		freeaddrinfo(servinfo);
 		exit(1);
 	}
 
-	freeaddrinfo(servinfo);
+	printf("Connected to the remote server - %s : %s\n", argv[1], argv[2]);
 
-	printf("Connected to the remote server -> %s : %s\n", argv[1], argv[2]);
-
-	do {
-		recv_len = recv(servfd, recv_buff, RECV_BUFF_LEN, 0);
-		if (recv_len == -1) {
-			perror("recv");
-			exit(1);
-		}
-		else if(recv_len == 0) {
-			fprintf(stderr, "recv: Remote server closed the connection\n");
-			exit(1);
-		}
-		else 
-			printf("%s", recv_buff);
-	} while(strcmp(recv_buff,"q\n"));
+	client_work(servfd);
 
 	close(servfd);
 
