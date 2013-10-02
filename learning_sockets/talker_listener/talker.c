@@ -9,8 +9,8 @@
 #include <netdb.h>
 #include <errno.h>
 
-#define LISTENING_PORT ("4000")
-#define LISTENING_QUEUE 1
+#define MYPORT ("4000")
+#define LISTENING_QUEUE (1)
 
 void serve_actual_work(int clientfd);
 void serve_incoming(int servfd);
@@ -74,7 +74,7 @@ int main(int argc, char * argv[])
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = AI_PASSIVE; // Use host IP
 
-	if((retval = getaddrinfo(NULL, LISTENING_PORT, &hints, &servinfo)) !=0 ) {
+	if((retval = getaddrinfo(NULL, MYPORT, &hints, &servinfo)) !=0 ) {
 		fprintf(stderr, "getaddrinfo() failed : %s\n", gai_strerror(retval));
 		exit(1);
 	}

@@ -9,12 +9,13 @@
 #include <stdlib.h>
 #include <netdb.h>
 
-#define REQ_ARGC 3
-#define RECV_BUFF_LEN 100
+#define REQ_ARGC (2)
+#define RECV_BUFF_LEN (100)
+#define MYPORT ("4000")
 
-void client_work(int servfd);
+void listener_work(int servfd);
 
-void client_work(int servfd)
+void listener_work(int servfd)
 {
 	int recv_len;
 	char recv_buff[RECV_BUFF_LEN];
@@ -45,7 +46,7 @@ int main(int argc, char * argv[])
 	struct addrinfo hints, * servinfo, * p;
 
 	if (argc != REQ_ARGC) {
-		fprintf(stderr, "Usage : %s [hostname/IP] [Port]\n", argv[0]);
+		fprintf(stderr, "Usage : %s [hostname/IP]\n", argv[0]);
 		exit(1);
 	}
 
@@ -54,7 +55,7 @@ int main(int argc, char * argv[])
 	hints.ai_socktype = SOCK_STREAM;
 
 	/* Getting address info */
-	if((retval = getaddrinfo(argv[1], argv[2], &hints, &servinfo)) != 0) {
+	if((retval = getaddrinfo(argv[1], MYPORT, &hints, &servinfo)) != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(retval));
 		exit(1);
 	}
@@ -81,9 +82,9 @@ int main(int argc, char * argv[])
 		exit(1);
 	}
 
-	printf("Connected to the remote server - %s : %s\n", argv[1], argv[2]);
+	printf("Connected to the remote server - %s : %s\n", argv[1], MYPORT);
 
-	client_work(servfd);
+	listener_work(servfd);
 
 	close(servfd);
 
