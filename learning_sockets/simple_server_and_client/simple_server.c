@@ -39,8 +39,7 @@ int main(int argc, char * argv[])
 		if (setsockopt(servfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1) {
 			perror("setsockopt");
 			close(servfd);
-			freeaddrinfo(servinfo);
-			exit(1);
+			continue;
         	}
 
 		if ((bind(servfd, p->ai_addr, p->ai_addrlen)) == -1 ) {
@@ -52,18 +51,17 @@ int main(int argc, char * argv[])
 		break;
 	}
 
+	freeaddrinfo(servinfo);
 	if (p == NULL) {
 		fprintf(stderr, "Failed to bind\n");
-		freeaddrinfo(servinfo);
-		exit(1);
+		exit(2);
 	}
 
 	
 	if ((listen(servfd, LISTENING_QUEUE)) == -1 ) {
 		perror("listen");
 		close(servfd);
-		freeaddrinfo(servinfo);
-		exit(1);
+		exit(3);
 	}
 
 	printf("Listening for connections...\n");
@@ -76,8 +74,7 @@ int main(int argc, char * argv[])
 		if (clientfd == -1) {
 			perror("accept");
 			close(servfd);
-			freeaddrinfo(servinfo);
-			exit(1);
+			exit(4);
 		}
 
 		if (send(clientfd, "Hello World!!\n", 14, 0) == -1)
@@ -87,7 +84,6 @@ int main(int argc, char * argv[])
 	}
 
 	close(servfd);
-	freeaddrinfo(servinfo);
 
 	return 0;
 }

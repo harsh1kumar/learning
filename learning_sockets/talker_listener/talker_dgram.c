@@ -32,7 +32,7 @@ int main(int argc, char * argv[])
 
 	if ((retval = getaddrinfo(argv[1], MYPORT, &hints, &servinfo)) != 0) {
 		fprintf(stderr, "getaddrinfo : %s\n", gai_strerror(retval));
-		exit(1);
+		exit(2);
 	}
 
 	for(p = servinfo; p != NULL; p = p->ai_next) {
@@ -46,7 +46,7 @@ int main(int argc, char * argv[])
 	if (p == NULL) {
 		fprintf(stderr, "Failed to create socket\n");
 		freeaddrinfo(servinfo);
-		exit(1);
+		exit(3);
 	}
 
 	printf("\nEnter String to send: ");
@@ -54,7 +54,7 @@ int main(int argc, char * argv[])
 		perror("getline");
 		close(servfd);
 		freeaddrinfo(servinfo);
-		exit(1);
+		exit(4);
 	}
 
 	if (sendto(servfd, send_buff, str_len + 1, 0,p->ai_addr, p->ai_addrlen) == -1) {
@@ -62,7 +62,7 @@ int main(int argc, char * argv[])
 		free(send_buff);
 		close(servfd);
 		freeaddrinfo(servinfo);
-		exit(1);
+		exit(5);
 	}
 
 	printf("Sent the following string to %s\n\t%s\n", argv[1], send_buff);

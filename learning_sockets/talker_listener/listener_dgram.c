@@ -53,8 +53,7 @@ int main(int argc, char * argv[])
 		if (setsockopt(servfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1) {
 			perror("setsockopt");
 			close(servfd);
-			freeaddrinfo(servinfo);
-			exit(1);
+			continue;
         	}
 
 		if (bind(servfd, p->ai_addr, p->ai_addrlen) == -1) {
@@ -69,8 +68,7 @@ int main(int argc, char * argv[])
 
 	if (p == NULL) {
 		fprintf(stderr, "Failed to bind\n");
-		close(servfd);
-		exit(1);
+		exit(2);
 	}
 
 	printf("Waiting for talker string...\n");
@@ -80,7 +78,7 @@ int main(int argc, char * argv[])
 			(struct sockaddr *)&talker_addr, &talker_addr_len)) == -1) {
 		perror("recvfrom");
 		close(servfd);
-		exit(1);
+		exit(3);
 	}
 
 	inet_ntop(talker_addr.ss_family, get_talker_addr((struct sockaddr *)&talker_addr), 

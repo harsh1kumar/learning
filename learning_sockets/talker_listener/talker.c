@@ -26,7 +26,7 @@ void serve_actual_work(int clientfd)
 		
 		if ((st_len = getline(&send_buff, &buff_len, stdin)) == -1) {
 			perror("getline");
-			exit(1);
+			exit(5);
 		}
 
 		/* The string sent is NULL terminated, so no need to 
@@ -51,7 +51,7 @@ void serve_incoming(int servfd)
 	if (clientfd == -1) {
 		perror("accept");
 		close(servfd);
-		exit(1);
+		exit(4);
 	}
 
 	serve_actual_work(clientfd);
@@ -88,8 +88,7 @@ int main(int argc, char * argv[])
 		if (setsockopt(servfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1) {
 			perror("setsockopt");
 			close(servfd);
-			freeaddrinfo(servinfo);
-			exit(1);
+			continue;
         	}
 
 		if ((bind(servfd, p->ai_addr, p->ai_addrlen)) == -1 ) {
@@ -105,14 +104,13 @@ int main(int argc, char * argv[])
 
 	if (p == NULL) {
 		fprintf(stderr, "Failed to bind\n");
-		close(servfd);
-		exit(1);
+		exit(2);
 	}
 	
 	if ((listen(servfd, LISTENING_QUEUE)) == -1 ) {
 		perror("listen");
 		close(servfd);
-		exit(1);
+		exit(3);
 	}
 
 	while(1)

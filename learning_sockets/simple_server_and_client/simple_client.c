@@ -30,7 +30,7 @@ int main(int argc, char * argv[])
 	/* Getting address info */
 	if((retval = getaddrinfo(argv[1], argv[2], &hints, &servinfo)) != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(retval));
-		exit(1);
+		exit(2);
 	}
 
 	/* Attempting creating a socket & connecting*/
@@ -42,19 +42,17 @@ int main(int argc, char * argv[])
 
 		if (connect(servfd, p->ai_addr, p->ai_addrlen) == -1) {
 			perror("connect");
+			close(servfd);
 			continue;
 		}
 		break;
 	}
 
+	freeaddrinfo(servinfo);
 	if (p == NULL) {
 		fprintf(stderr,"Failed to connect\n");
-		close(servfd);
-		freeaddrinfo(servinfo);
-		exit(1);
+		exit(3);
 	}
-
-	freeaddrinfo(servinfo);
 
 	printf("Connected to the remote server -> %s : %s\n", argv[1], argv[2]);
 

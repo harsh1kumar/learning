@@ -31,13 +31,13 @@ int main(int argc, char * argv[])
 	if ((servfd = socket(servinfo->ai_family, servinfo->ai_socktype, servinfo->ai_protocol)) != 0) {
 		fprintf(stderr, "socket() failed : %s\n", strerror(errno));
 		freeaddrinfo(servinfo);
-		exit(1);
+		exit(2);
 	}
 
 	if (connect(servfd, servinfo->ai_addr, sizeof servinfo->ai_addrlen) != 0) {
 		fprintf(stderr, "connect() failed : %s", strerror(errno));
 		freeaddrinfo(servinfo);
-		exit(1);
+		exit(3);
 	}
 
 

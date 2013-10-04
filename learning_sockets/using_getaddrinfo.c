@@ -27,7 +27,7 @@ int main(int argc, char * argv[])
 
 	if ((status = getaddrinfo(argv[1], NULL, &hints, &a_info)) != 0) {
 		fprintf(stderr, "Error occured in getaddrinfo() : %s\n", gai_strerror(status));
-		exit(1);
+		exit(2);
 	}
 	else 
 		printf("getaddrinfo was a success\n");
@@ -50,7 +50,7 @@ int main(int argc, char * argv[])
 		}
 		else {
 			printf("Family = Other value!!\n");
-			exit(1);
+			exit(3);
 		}
 		
 		printf("Address = %s", ipaddr);
