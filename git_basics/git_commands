@@ -23,3 +23,9 @@
 *) git help [help-topic]
 *) git reset HEAD [file]
 	Unstages the file
+*) git reset --hard [commit]
+	Sets the HEAD to this commit. Working directory, staging area, & everything
+		else changes to before to this commit.
+	NOTE: Dangerous - all changes will be lost even the uncommited ones.
+*) git reset --hard HEAD
+	Resets working tree to the last commit. All uncommited changes will be lost.
