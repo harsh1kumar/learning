@@ -2,7 +2,8 @@ SRC_DIR = .\
 	templates\
 	talker_listener \
 	multi_user_chat \
-	simple_server_and_client
+	simple_server_and_client \
+	sending_float_simple
 
 SRC_FILES = $(foreach dir, $(SRC_DIR), $(wildcard $(dir)/*.c))
 
