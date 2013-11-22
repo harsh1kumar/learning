@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void stack::initialize()
+void Stack::initialize()
 {
 	for(int i=0; i <STACK_SIZE; ++i)
 		stack_arr[i] = 0;
@@ -16,7 +16,7 @@ void stack::initialize()
 	return;
 }
 
-void stack::clear_stack()
+void Stack::clear_stack()
 {
 	while(!is_empty())
 		pop();
@@ -24,29 +24,29 @@ void stack::clear_stack()
 	return;
 }
 
-void stack::push(double val)
+void Stack::push(double val)
 {
 	stack_arr[++head] = val;
 
 	return;
 }
 
-double stack::pop()
+double Stack::pop()
 {
 	return stack_arr[head--];
 }
 
-double stack::peek()
+double Stack::peek()
 {
 	return stack_arr[head];
 }
 
-bool stack::is_empty()
+bool Stack::is_empty()
 {
 	return (head == -1);
 }
 
-bool stack::is_full()
+bool Stack::is_full()
 {
 	return (head == STACK_SIZE - 1);
 }

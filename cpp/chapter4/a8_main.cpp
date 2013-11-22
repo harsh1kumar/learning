@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-	stack demo_stack;
+	Stack demo_stack;
 
 	demo_stack.initialize();
 	cout	<< "Is stack empty at the start? : " 

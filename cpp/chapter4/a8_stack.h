@@ -1,9 +1,9 @@
 #ifndef A8_STACK_H
 #define A8_STACK_H
 
-static const unsigned int STACK_SIZE = 100;
+static const int STACK_SIZE = 100;
 
-struct stack
+struct Stack
 {
 	private:
 		double stack_arr[STACK_SIZE];
