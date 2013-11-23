@@ -36,6 +36,4 @@ public:
 	bool is_full(); // No real use in this implementation of stack
 };
 
-typedef Stack stack; // WARNING: Bad way of coding. Change in alternative stack class implementation required.
-
 #endif
