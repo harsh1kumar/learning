@@ -15,4 +15,5 @@ int main()
 		cout << s;
 		while(getchar() != '\n');
 	}
+	in.close();
 }

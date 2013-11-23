@@ -21,5 +21,6 @@ int main()
 		all_line = all_line + vs[i];
 	}
 	cout<< all_line <<endl;
+	in.close();
 	return 0;
 }

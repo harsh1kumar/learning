@@ -12,10 +12,12 @@ int main()
 
 	while(in >> s)
 		words++;
+	in.close();
 
 	ifstream in1("testfile");
 	for(i=0; in1 >> s; i++)
 		;
 		
 	cout<< "words = " << words << " i = " << i <<endl;
+	in1.close();
 }
