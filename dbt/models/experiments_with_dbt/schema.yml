@@ -1,0 +1,13 @@
+
+version: 2
+
+models:
+  - name: team_name_counts
+    description: "Count of rows for each team name"
+    columns:
+      - name: homeTeamName
+        description: "Name of the home team"
+        tests:
+          - unique
+          - not_null
+

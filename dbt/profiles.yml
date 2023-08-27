@@ -1,0 +1,14 @@
+# example profiles.yml file
+dbt_project:
+  target: test
+  outputs:
+    test:
+      type: bigquery
+      method: oauth
+      project: wide-hexagon-397214
+      dataset: test_dataset
+      threads: 1
+      job_execution_timeout_seconds: 300
+      location: US
+      priority: interactive
+
