@@ -1,3 +1,6 @@
+# Manually added by Harsh
+env/
+
 # Object files
 *.o
 
