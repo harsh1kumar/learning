@@ -1,5 +1,8 @@
-torch
-jupyterlab
-pandas
-matplotlib
-scikit-learn
+torch==2.3.1
+torchvision==0.18.1
+lightning==2.3.2
+tensorboardX==2.6.2.2
+jupyterlab==4.2.2
+pandas==2.2.2
+matplotlib==3.9.0
+scikit-learn==1.5.0
