@@ -1,3 +1,5 @@
-restoId,createdate,restoname,dishes,director,genres,rating
-1,1995-11-22,KFC,Zinger|Rice Bowl|Pepsi|,8.3
-2,1995-12-15,McDonalds,McChicken|Big Mac|McFlurry|Pepsi,6.9
+restoId,createdate,restoname,dishes,cuisine,rating
+1,1995-11-22,KFC,Zinger|Rice Bowl|Pepsi|,FastFood,8.3
+2,1995-12-15,McDonalds,McChicken|Big Mac|McFlurry|Pepsi,FastFood,6.9
+3,1996-02-01,Coffee Shop,Latte|Espresso|Muffin,Coffee,8.9
+4,1997-05-13,Italian Cafe,Pizza|Pasta|Pepsi|Latte,Italian,7.9
